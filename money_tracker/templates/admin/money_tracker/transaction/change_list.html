@@ -1,0 +1,56 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'money_tracker/admin/css/money_tracker_admin.css' %}">
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{# Hide Django default top-right object tools because we use custom toolbar #}
+{% block object-tools %}{% endblock %}
+
+{% block content %}
+    <div class="mt-dashboard">
+        <div class="mt-page-header">
+            <div>
+                <h1 class="mt-page-title">Transactions Overview</h1>
+                <div class="mt-page-subtitle">
+                    Track deposits, expenses, accounts and current balance.
+                </div>
+            </div>
+
+            <div class="mt-toolbar">
+                <a href="{% url 'admin:money_tracker_transaction_add' %}" class="mt-btn mt-btn-light">
+                    Add Transaction
+                </a>
+
+                <a href="{% url 'admin:money_tracker_transaction_report' %}" class="mt-btn mt-btn-primary">
+                    View Full Report
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-card-grid">
+            <div class="mt-card deposit">
+                <div class="mt-card-label">Total Deposit</div>
+                <div class="mt-card-value">{{ total_deposit|default:0 }}</div>
+            </div>
+
+            <div class="mt-card expense">
+                <div class="mt-card-label">Total Expense</div>
+                <div class="mt-card-value">{{ total_expense|default:0 }}</div>
+            </div>
+
+            <div class="mt-card balance">
+                <div class="mt-card-label">Net Balance</div>
+                <div class="mt-card-value">{{ net_balance|default:0 }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-admin-list">
+        {{ block.super }}
+    </div>
+{% endblock %}

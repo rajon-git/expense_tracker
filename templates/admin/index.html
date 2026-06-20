@@ -1,0 +1,150 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static log %}
+
+{% block content %}
+
+<div class="mt-admin-home">
+
+    <div class="mt-home-header">
+        <div>
+            <h1 class="mt-home-title">Expense & Deposit Management</h1>
+            <p class="mt-home-subtitle">
+                Manage accounts, categories, transactions and reports from one smart admin dashboard.
+            </p>
+        </div>
+
+        <div class="mt-home-actions">
+            <a href="{% url 'admin:money_tracker_transaction_add' %}" class="mt-btn mt-btn-primary">
+                Add Transaction
+            </a>
+
+            <a href="{% url 'admin:money_tracker_transaction_report' %}" class="mt-btn mt-btn-success">
+                View Report
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-home-grid">
+
+        <div class="mt-home-main">
+            {% if app_list %}
+                <div class="mt-app-grid">
+                    {% for app in app_list %}
+                        <div class="mt-app-card">
+                            <div class="mt-app-card-header">
+                                <div class="mt-app-icon">
+                                    {{ app.name|first }}
+                                </div>
+
+                                <div>
+                                    <h2 class="mt-app-title">
+                                        {% if app.app_url %}
+                                            <a href="{{ app.app_url }}">{{ app.name }}</a>
+                                        {% else %}
+                                            {{ app.name }}
+                                        {% endif %}
+                                    </h2>
+                                    <div class="mt-app-subtitle">
+                                        {{ app.models|length }} module{{ app.models|length|pluralize }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-model-list">
+                                {% for model in app.models %}
+                                    <div class="mt-model-row">
+                                        <div class="mt-model-info">
+                                            {% if model.admin_url %}
+                                                <a href="{{ model.admin_url }}" class="mt-model-name">
+                                                    {{ model.name }}
+                                                </a>
+                                            {% else %}
+                                                <span class="mt-model-name">{{ model.name }}</span>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="mt-model-actions">
+                                            {% if model.add_url %}
+                                                <a href="{{ model.add_url }}" class="mt-model-btn mt-model-btn-add">
+                                                    Add
+                                                </a>
+                                            {% endif %}
+
+                                            {% if model.admin_url and not model.view_only %}
+                                                <a href="{{ model.admin_url }}" class="mt-model-btn">
+                                                    Manage
+                                                </a>
+                                            {% elif model.admin_url %}
+                                                <a href="{{ model.admin_url }}" class="mt-model-btn">
+                                                    View
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="mt-empty-card">
+                    <h3>No admin modules available</h3>
+                    <p>You do not have permission to view or edit anything.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mt-home-side">
+            <div class="mt-recent-card">
+                <div class="mt-recent-header">
+                    <h2>Recent Actions</h2>
+                    <span>Latest activity</span>
+                </div>
+
+                {% get_admin_log 10 as admin_log for_user user %}
+
+                {% if admin_log %}
+                    <div class="mt-recent-list">
+                        {% for entry in admin_log %}
+                            <div class="mt-recent-item">
+                                <div class="mt-recent-icon">
+                                    {% if entry.is_addition %}
+                                        +
+                                    {% elif entry.is_change %}
+                                        ✎
+                                    {% elif entry.is_deletion %}
+                                        ×
+                                    {% else %}
+                                        •
+                                    {% endif %}
+                                </div>
+
+                                <div class="mt-recent-content">
+                                    {% if entry.is_deletion or not entry.get_admin_url %}
+                                        <div class="mt-recent-title">{{ entry.object_repr }}</div>
+                                    {% else %}
+                                        <a href="{{ entry.get_admin_url }}" class="mt-recent-title">
+                                            {{ entry.object_repr }}
+                                        </a>
+                                    {% endif %}
+
+                                    <div class="mt-recent-meta">
+                                        {{ entry.content_type.name|capfirst }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="mt-empty-recent">
+                        No recent actions yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

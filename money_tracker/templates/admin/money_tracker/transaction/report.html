@@ -1,0 +1,234 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'money_tracker/admin/css/money_tracker_admin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="mt-report-compact">
+
+    <div class="mt-page-header">
+        <div>
+            <h1 class="mt-page-title">Expense & Deposit Report</h1>
+            <div class="mt-page-subtitle">
+                Review account-wise, daily, and detailed transaction summaries.
+            </div>
+        </div>
+
+        <div class="mt-toolbar">
+            <a href="{% url 'admin:money_tracker_transaction_report_download' %}?{{ query_string }}" class="mt-btn mt-btn-success">
+                Excel
+            </a>
+
+            <a href="{% url 'admin:money_tracker_transaction_report_pdf' %}?{{ query_string }}" class="mt-btn mt-btn-danger">
+                PDF
+            </a>
+
+            <button type="button" onclick="window.print()" class="mt-btn mt-btn-light">
+                Print
+            </button>
+
+            <a href="{% url 'admin:money_tracker_transaction_changelist' %}" class="mt-btn mt-btn-primary">
+                Back
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-filter-card">
+        <form method="get">
+            <div class="mt-filter-grid">
+                <div class="mt-field">
+                    <label>Start Date</label>
+                    <input type="date" name="start_date" value="{{ start_date|default:'' }}">
+                </div>
+
+                <div class="mt-field">
+                    <label>End Date</label>
+                    <input type="date" name="end_date" value="{{ end_date|default:'' }}">
+                </div>
+
+                <div class="mt-field">
+                    <label>Account</label>
+                    <select name="account">
+                        <option value="">All Accounts</option>
+                        {% for account in accounts %}
+                            <option value="{{ account.id }}" {% if selected_account == account.id|stringformat:"s" %}selected{% endif %}>
+                                {{ account.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mt-actions">
+                    <button type="submit" class="mt-btn mt-btn-primary">
+                        Filter
+                    </button>
+
+                    <a href="{% url 'admin:money_tracker_transaction_report' %}" class="mt-btn mt-btn-light">
+                        Reset
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-card-grid">
+        <div class="mt-card deposit">
+            <div class="mt-card-label">Total Deposit</div>
+            <div class="mt-card-value">{{ total_deposit }}</div>
+        </div>
+
+        <div class="mt-card expense">
+            <div class="mt-card-label">Total Expense</div>
+            <div class="mt-card-value">{{ total_expense }}</div>
+        </div>
+
+        <div class="mt-card balance">
+            <div class="mt-card-label">Net Balance</div>
+            <div class="mt-card-value">{{ net_balance }}</div>
+        </div>
+    </div>
+
+    <div class="mt-section">
+        <div class="mt-section-header">
+            <div>
+                <h2 class="mt-section-title">Account Wise Report</h2>
+                <div class="mt-section-subtitle">Deposit, expense and balance by account</div>
+            </div>
+        </div>
+
+        <div class="mt-table-wrap">
+            <table class="mt-table">
+                <thead>
+                    <tr>
+                        <th>Account</th>
+                        <th>Deposit</th>
+                        <th>Expense</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in account_report %}
+                        <tr>
+                            <td><strong>{{ row.account_name }}</strong></td>
+                            <td class="mt-amount-positive">{{ row.deposit }}</td>
+                            <td class="mt-amount-negative">{{ row.expense }}</td>
+                            <td class="mt-amount-balance">{{ row.balance }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="mt-empty">No account report found.</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-section">
+        <div class="mt-section-header">
+            <div>
+                <h2 class="mt-section-title">Daily Report</h2>
+                <div class="mt-section-subtitle">Daily deposit and expense summary</div>
+            </div>
+        </div>
+
+        <div class="mt-table-wrap">
+            <table class="mt-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Deposit</th>
+                        <th>Expense</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in daily_report %}
+                        <tr>
+                            <td><strong>{{ row.date }}</strong></td>
+                            <td class="mt-amount-positive">{{ row.deposit }}</td>
+                            <td class="mt-amount-negative">{{ row.expense }}</td>
+                            <td class="mt-amount-balance">{{ row.balance }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="mt-empty">No daily report found.</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-section">
+        <div class="mt-section-header">
+            <div>
+                <h2 class="mt-section-title">Transaction Details</h2>
+                <div class="mt-section-subtitle">All matching transactions from selected filter</div>
+            </div>
+        </div>
+
+        <div class="mt-table-wrap">
+            <table class="mt-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Account</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.date }}</td>
+
+                            <td>
+                                {% if transaction.transaction_type == "deposit" %}
+                                    <span class="mt-badge mt-badge-deposit">Deposit</span>
+                                {% else %}
+                                    <span class="mt-badge mt-badge-expense">Expense</span>
+                                {% endif %}
+                            </td>
+
+                            <td><strong>{{ transaction.account }}</strong></td>
+                            <td>{{ transaction.category }}</td>
+
+                            <td>
+                                {% if transaction.transaction_type == "deposit" %}
+                                    <span class="mt-amount-positive">{{ transaction.amount }}</span>
+                                {% else %}
+                                    <span class="mt-amount-negative">{{ transaction.amount }}</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ transaction.note|default:"-" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6">
+                                <div class="mt-empty">No transaction found.</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,720 @@
+:root {
+    --mt-primary: #0f766e;
+    --mt-primary-dark: #115e59;
+    --mt-success: #16a34a;
+    --mt-success-dark: #15803d;
+    --mt-danger: #dc2626;
+    --mt-danger-dark: #b91c1c;
+    --mt-warning: #f59e0b;
+    --mt-info: #2563eb;
+    --mt-bg: #f8fafc;
+    --mt-card: #ffffff;
+    --mt-border: #e5e7eb;
+    --mt-text: #111827;
+    --mt-muted: #6b7280;
+    --mt-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+}
+
+/* =========================
+   Main Layout
+========================= */
+
+#content {
+    background: var(--mt-bg);
+}
+
+.mt-dashboard {
+    margin-bottom: 10px;
+}
+
+/* =========================
+   Page Header
+========================= */
+
+.mt-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px !important;
+}
+
+.mt-page-title {
+    margin: 0;
+    font-size: 20px !important;
+    line-height: 1.1 !important;
+    font-weight: 800;
+    color: var(--mt-text);
+    letter-spacing: -0.02em;
+}
+
+.mt-page-subtitle {
+    margin-top: 2px !important;
+    color: var(--mt-muted);
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+}
+
+/* =========================
+   Toolbar Buttons
+========================= */
+
+.mt-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mt-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    padding: 0 11px !important;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    font-size: 11px !important;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.mt-page-header .mt-toolbar .mt-btn {
+    width: 78px !important;
+    min-width: 78px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+}
+
+.mt-btn-primary {
+    background: var(--mt-primary);
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(15, 118, 110, 0.15);
+}
+
+.mt-btn-primary:hover {
+    background: var(--mt-primary-dark);
+}
+
+.mt-btn-light {
+    background: #ffffff;
+    color: #111827 !important;
+    border-color: var(--mt-border);
+}
+
+.mt-btn-light:hover {
+    background: #f3f4f6;
+}
+
+.mt-btn-danger {
+    background: var(--mt-danger);
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.15);
+}
+
+.mt-btn-danger:hover {
+    background: var(--mt-danger-dark);
+}
+
+.mt-btn-success {
+    background: var(--mt-success);
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.15);
+}
+
+.mt-btn-success:hover {
+    background: var(--mt-success-dark);
+}
+
+/* =========================
+   Summary Cards
+========================= */
+
+.mt-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.mt-card {
+    background: var(--mt-card);
+    border: 1px solid var(--mt-border);
+    border-radius: 11px;
+    padding: 11px 14px;
+    box-shadow: var(--mt-shadow);
+    position: relative;
+    overflow: hidden;
+    min-height: 64px;
+}
+
+.mt-card::after {
+    content: "";
+    position: absolute;
+    right: -24px;
+    top: -28px;
+    width: 76px;
+    height: 76px;
+    border-radius: 999px;
+    opacity: 0.12;
+}
+
+.mt-card.deposit::after {
+    background: var(--mt-success);
+}
+
+.mt-card.expense::after {
+    background: var(--mt-danger);
+}
+
+.mt-card.balance::after {
+    background: var(--mt-info);
+}
+
+.mt-card-label {
+    color: var(--mt-muted);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 5px;
+}
+
+.mt-card-value {
+    font-size: 21px;
+    line-height: 1.1;
+    font-weight: 900;
+    color: var(--mt-text);
+}
+
+.mt-card.deposit .mt-card-value {
+    color: var(--mt-success);
+}
+
+.mt-card.expense .mt-card-value {
+    color: var(--mt-danger);
+}
+
+.mt-card.balance .mt-card-value {
+    color: var(--mt-info);
+}
+
+/* =========================
+   Filter Card
+========================= */
+
+.mt-filter-card {
+    background: #ffffff;
+    border: 1px solid var(--mt-border);
+    border-radius: 10px;
+    padding: 8px 10px !important;
+    box-shadow: var(--mt-shadow);
+    margin-bottom: 10px !important;
+}
+
+.mt-filter-grid {
+    display: grid !important;
+    grid-template-columns: 220px 220px minmax(260px, 360px) auto !important;
+    gap: 8px !important;
+    align-items: end !important;
+}
+
+.mt-field label {
+    display: block;
+    font-weight: 700;
+    color: var(--mt-text);
+    margin-bottom: 3px !important;
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+}
+
+.mt-field input,
+.mt-field select {
+    width: 100%;
+    min-height: 32px !important;
+    height: 32px !important;
+    border: 1px solid var(--mt-border);
+    border-radius: 7px !important;
+    padding: 4px 8px !important;
+    background: #ffffff;
+    color: var(--mt-text);
+    font-size: 12px !important;
+    box-sizing: border-box;
+}
+
+.mt-actions {
+    display: flex;
+    gap: 5px !important;
+    flex-wrap: wrap;
+    align-items: end !important;
+}
+
+.mt-actions .mt-btn {
+    width: 70px !important;
+    min-width: 70px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 0 10px !important;
+}
+
+/* =========================
+   Report Sections
+========================= */
+
+.mt-section {
+    background: #ffffff;
+    border: 1px solid var(--mt-border);
+    border-radius: 11px;
+    box-shadow: var(--mt-shadow);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.mt-section-header {
+    padding: 8px 11px;
+    border-bottom: 1px solid var(--mt-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+.mt-section-title {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--mt-text);
+}
+
+.mt-section-subtitle {
+    color: var(--mt-muted);
+    font-size: 10px;
+    margin-top: 1px;
+}
+
+/* =========================
+   Tables
+========================= */
+
+.mt-table-wrap {
+    overflow-x: auto;
+}
+
+.mt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.mt-table th {
+    background: #f9fafb;
+    color: #374151;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--mt-border);
+    white-space: nowrap;
+}
+
+.mt-table td {
+    padding: 7px 9px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #111827;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.mt-table tr:hover td {
+    background: #f8fafc;
+}
+
+/* =========================
+   Amount Colors
+========================= */
+
+.mt-amount-positive {
+    color: var(--mt-success);
+    font-weight: 800;
+}
+
+.mt-amount-negative {
+    color: var(--mt-danger);
+    font-weight: 800;
+}
+
+.mt-amount-balance {
+    color: var(--mt-info);
+    font-weight: 800;
+}
+
+/* =========================
+   Badges
+========================= */
+
+.mt-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.mt-badge-deposit {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.mt-badge-expense {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.mt-empty {
+    padding: 16px;
+    text-align: center;
+    color: var(--mt-muted);
+    font-size: 12px;
+}
+
+/* =========================
+   Django Admin Changelist Polish
+========================= */
+
+.mt-admin-list #toolbar {
+    width: fit-content !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    padding: 6px 8px !important;
+    margin-bottom: 6px !important;
+    border-radius: 9px !important;
+    background: #ffffff !important;
+    border: 1px solid var(--mt-border) !important;
+    box-shadow: var(--mt-shadow) !important;
+}
+
+.mt-admin-list #toolbar form {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 0 !important;
+}
+
+.mt-admin-list #toolbar label {
+    margin: 0 !important;
+    line-height: 1 !important;
+}
+
+.mt-admin-list #toolbar img {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.mt-admin-list #toolbar input[type="text"],
+.mt-admin-list #toolbar #searchbar {
+    width: 280px !important;
+    max-width: 280px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 4px 8px !important;
+    border-radius: 7px !important;
+    border: 1px solid var(--mt-border) !important;
+    font-size: 12px !important;
+}
+
+.mt-admin-list #toolbar input[type="submit"] {
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 13px !important;
+    border-radius: 7px !important;
+    background: var(--mt-primary) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+}
+
+/* Date hierarchy row */
+.mt-admin-list .xfull {
+    padding: 5px 0 !important;
+    margin: 0 0 5px 0 !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    border-bottom: 1px solid var(--mt-border) !important;
+}
+
+.mt-admin-list .xfull a,
+.mt-admin-list .xfull strong {
+    font-size: 12px !important;
+}
+
+/* Action row */
+.mt-admin-list #changelist .actions {
+    padding: 6px 8px !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid var(--mt-border) !important;
+    border-bottom: 0 !important;
+    border-radius: 9px 9px 0 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-height: 34px !important;
+}
+
+.mt-admin-list #changelist .actions label {
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+
+.mt-admin-list #changelist .actions select {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 2px 7px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--mt-border) !important;
+}
+
+.mt-admin-list #changelist .actions button {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 11px !important;
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+.mt-admin-list #changelist .actions span {
+    font-size: 12px !important;
+}
+
+/* Table area */
+.mt-admin-list #changelist {
+    margin-top: 0 !important;
+}
+
+.mt-admin-list #changelist-form {
+    margin-top: 0 !important;
+}
+
+.mt-admin-list #changelist .results {
+    margin-top: 0 !important;
+}
+
+.mt-admin-list #changelist table {
+    margin-top: 0 !important;
+    background: #ffffff;
+    border-radius: 0 0 9px 9px !important;
+    overflow: hidden;
+    box-shadow: var(--mt-shadow) !important;
+}
+
+.mt-admin-list #changelist table thead th {
+    background: #f9fafb;
+    color: #374151;
+    font-size: 10px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 7px 9px !important;
+    height: 30px !important;
+}
+
+.mt-admin-list #changelist table tbody td,
+.mt-admin-list #changelist table tbody th {
+    padding: 7px 9px !important;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 12px !important;
+    height: 32px !important;
+}
+
+.mt-admin-list #changelist table tbody tr:hover td,
+.mt-admin-list #changelist table tbody tr:hover th {
+    background: #f8fafc;
+}
+
+.mt-admin-list #changelist table .action-checkbox-column,
+.mt-admin-list #changelist table .action-checkbox {
+    width: 34px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+.mt-admin-list .paginator {
+    padding: 7px 9px !important;
+    margin-top: 0 !important;
+    font-size: 12px !important;
+    background: #ffffff !important;
+    border: 1px solid var(--mt-border) !important;
+    border-top: 0 !important;
+    border-radius: 0 0 9px 9px !important;
+}
+
+/* =========================
+   Right Filter Panel
+========================= */
+
+.mt-admin-list #changelist-filter {
+    background: #ffffff;
+    border-left: 1px solid var(--mt-border);
+    box-shadow: -5px 0 14px rgba(15, 23, 42, 0.04);
+}
+
+.mt-admin-list #changelist-filter h2 {
+    background: var(--mt-primary);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 8px 11px;
+}
+
+.mt-admin-list #changelist-filter h3 {
+    font-weight: 800;
+    color: #111827;
+    font-size: 11px;
+}
+
+.mt-admin-list #changelist-filter a {
+    color: #4b5563;
+    font-size: 11px;
+}
+
+.mt-admin-list #changelist-filter li.selected a {
+    color: var(--mt-primary);
+    font-weight: 800;
+}
+
+/* Hide duplicate Django object tools inside custom wrapper */
+.mt-admin-list .object-tools {
+    display: none;
+}
+
+/* =========================
+   Extra Compact Report Wrapper
+========================= */
+
+.mt-report-compact .mt-page-header {
+    margin-bottom: 7px !important;
+}
+
+.mt-report-compact .mt-filter-card {
+    margin-bottom: 8px !important;
+}
+
+.mt-report-compact .mt-card-grid {
+    margin-bottom: 8px !important;
+}
+
+.mt-report-compact .mt-section {
+    margin-bottom: 8px !important;
+}
+
+/* =========================
+   Print
+========================= */
+
+@media print {
+    .breadcrumbs,
+    #header,
+    #nav-sidebar,
+    .mt-filter-card,
+    .mt-toolbar,
+    .object-tools,
+    .submit-row {
+        display: none !important;
+    }
+
+    #content {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+
+    .mt-card,
+    .mt-section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .mt-card-grid {
+        gap: 8px;
+    }
+
+    .mt-table th,
+    .mt-table td {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1000px) {
+    .mt-filter-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .mt-page-header .mt-toolbar .mt-btn {
+        width: 90px !important;
+        min-width: 90px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .mt-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mt-page-header {
+        align-items: flex-start;
+    }
+
+    .mt-toolbar {
+        justify-content: flex-start;
+    }
+
+    .mt-admin-list #toolbar {
+        width: 100% !important;
+    }
+
+    .mt-admin-list #toolbar input[type="text"],
+    .mt-admin-list #toolbar #searchbar {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .mt-filter-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mt-page-header .mt-toolbar .mt-btn,
+    .mt-actions .mt-btn {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .mt-admin-list #toolbar form {
+        flex-wrap: wrap !important;
+    }
+
+    .mt-admin-list #toolbar input[type="submit"] {
+        width: 100% !important;
+    }
+}

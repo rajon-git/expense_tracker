@@ -1,0 +1,26 @@
+source venv/bin/activate
+pip install django-admin-interface
+python manage.py migrate
+python manage.py loaddata admin_interface_theme_bootstrap.json
+python manage.py collectstatic --clear
+python manage.py runserver
+
+
+INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
+
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+
+    "money_tracker",
+]
+
+settings/py : 
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
